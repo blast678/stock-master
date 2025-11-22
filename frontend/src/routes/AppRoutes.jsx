@@ -19,6 +19,13 @@ import MoveHistory from '../pages/MoveHistory';
 import Settings from '../pages/Settings';
 import Profile from '../pages/Profile';
 import Warehouses from '../pages/Warehouses';
+
+// NEW PAGES
+import AddWarehouse from '../pages/AddWarehouse';
+import AddLocation from '../pages/AddLocation';
+import EditWarehouse from '../pages/EditWarehouse';
+import EditLocation from '../pages/EditLocation';
+
 // Components
 import PrivateRoute from './PrivateRoute';
 
@@ -28,6 +35,7 @@ const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
+
         {/* Public Routes */}
         <Route 
           path="/login" 
@@ -44,38 +52,46 @@ const AppRoutes = () => {
 
         {/* Protected Routes */}
         <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-        
+
         {/* Products */}
         <Route path="/products" element={<PrivateRoute><Products /></PrivateRoute>} />
         <Route path="/products/new" element={<PrivateRoute><ProductForm /></PrivateRoute>} />
         <Route path="/products/edit/:id" element={<PrivateRoute><ProductForm /></PrivateRoute>} />
-        
+
         {/* Operations */}
         <Route path="/receipts" element={<PrivateRoute><Receipts /></PrivateRoute>} />
         <Route path="/receipts/new" element={<PrivateRoute><DeliveryForm /></PrivateRoute>} />
         <Route path="/receipts/:id" element={<PrivateRoute><DeliveryForm /></PrivateRoute>} />
-        
+
         <Route path="/delivery" element={<PrivateRoute><Delivery /></PrivateRoute>} />
         <Route path="/delivery/new" element={<PrivateRoute><DeliveryForm /></PrivateRoute>} />
         <Route path="/delivery/:id" element={<PrivateRoute><DeliveryForm /></PrivateRoute>} />
-        
+
         <Route path="/transfer" element={<PrivateRoute><Transfer /></PrivateRoute>} />
         <Route path="/adjustment" element={<PrivateRoute><Adjustment /></PrivateRoute>} />
         <Route path="/history" element={<PrivateRoute><MoveHistory /></PrivateRoute>} />
-        
-        {/* Settings & Profile */}
+        <Route path="/settings/add-warehouse" element={<PrivateRoute><AddWarehouse/></PrivateRoute>}/>
+        <Route path="/settings/add-location" element={<PrivateRoute><AddLocation/></PrivateRoute>}/>
+        <Route path="/settings/edit-warehouse/:id" element={<PrivateRoute><EditWarehouse/></PrivateRoute>}/>
+        <Route path="/settings/edit-location/:id" element={<PrivateRoute><EditLocation/></PrivateRoute>}/>
+
+
+        {/* Settings */}
         <Route path="/settings" element={<PrivateRoute><Settings /></PrivateRoute>} />
+
+        {/* Profile */}
         <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
 
-        {/* Default Route */}
+        {/* Warehouses Page */}
+        <Route 
+          path="/warehouses" 
+          element={<PrivateRoute><Warehouses /></PrivateRoute>} 
+        />
+
+        {/* Default Routes */}
         <Route path="/" element={<Navigate to="/dashboard" />} />
         <Route path="*" element={<Navigate to="/dashboard" />} />
-        <Route path="/warehouses" element={
-    <PrivateRoute>
-      <Warehouses />
-    </PrivateRoute>
-  } 
-/>
+
       </Routes>
     </BrowserRouter>
   );
