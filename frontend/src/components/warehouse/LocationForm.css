@@ -1,0 +1,98 @@
+.location-form-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2.2rem 2.8rem 1.5rem;
+  background: #151517;
+  border: 2px solid #fa8899;
+  border-radius: 18px;
+  color: #fa8899;
+  font-family: 'Inter', Arial, sans-serif;
+  box-shadow: 0 6px 36px #0004;
+  display: flex;
+  flex-direction: column;
+}
+
+.location-form-header {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: #fa8899;
+  letter-spacing: 0.5px;
+  text-align: left;
+}
+
+.location-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.location-form-group {
+  display: flex;
+  flex-direction: column;
+  font-size: 1.18rem;
+}
+
+.location-form-group label {
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+  color: #fa8899;
+  letter-spacing: 0.1rem;
+}
+
+.location-form-group input,
+.location-form-group select {
+  background: #232325;
+  border: 1.5px solid #fa8899;
+  color: #fa8899;
+  border-radius: 7px;
+  padding: 0.55em 1.0em;
+  font-size: 1.07em;
+}
+
+.location-form-group input:focus,
+.location-form-group select:focus {
+  border-color: #ff9ea5;
+  outline: none;
+}
+
+.location-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1.3em;
+}
+
+.btn.btn-save {
+  background: #fa8899;
+  color: #212122;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.13em;
+  font-weight: 600;
+  padding: 0.42em 1.6em;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  transition: background 0.1s;
+  cursor: pointer;
+}
+
+.btn.btn-save:hover {
+  background: #ffafc3;
+}
+
+.location-form-footer {
+  margin-top: 2.5rem;
+  text-align: center;
+  font-size: 1.14rem;
+  color: #ffafc388;
+  letter-spacing: 0.04em;
+}
+
+@media (max-width: 640px) {
+  .location-form-container {
+    padding: 0.7rem 0.6rem 1rem;
+    border-radius: 11px;
+  }
+  .location-form-header { font-size: 1.5rem; }
+}

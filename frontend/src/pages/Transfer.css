@@ -1,0 +1,22 @@
+.transfer-page {
+  padding: var(--spacing-lg);
+}
+
+.transfer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.transfer-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  transition: var(--transition);
+}
+
+.transfer-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}

@@ -6,9 +6,19 @@ import Login from '../pages/auth/Login';
 import Signup from '../pages/auth/Signup';
 import ForgotPassword from '../pages/auth/ForgotPassword';
 
-// Protected Pages
+// Main Pages
 import Dashboard from '../pages/Dashboard';
-
+import Products from '../pages/Products';
+import ProductForm from '../pages/ProductForm';
+import Receipts from '../pages/Receipts';
+import Delivery from '../pages/Delivery';
+import DeliveryForm from '../pages/DeliveryForm';
+import Transfer from '../pages/Transfer';
+import Adjustment from '../pages/Adjustment';
+import MoveHistory from '../pages/MoveHistory';
+import Settings from '../pages/Settings';
+import Profile from '../pages/Profile';
+import Warehouses from '../pages/Warehouses';
 // Components
 import PrivateRoute from './PrivateRoute';
 
@@ -33,28 +43,39 @@ const AppRoutes = () => {
         />
 
         {/* Protected Routes */}
-        <Route
-          path="/dashboard"
-          element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
-          }
-        />
-
-        {/* Placeholder routes - will be implemented next */}
-        <Route path="/products" element={<PrivateRoute><div>Products Page (Coming Soon)</div></PrivateRoute>} />
-        <Route path="/receipts" element={<PrivateRoute><div>Receipts Page (Coming Soon)</div></PrivateRoute>} />
-        <Route path="/delivery" element={<PrivateRoute><div>Delivery Page (Coming Soon)</div></PrivateRoute>} />
-        <Route path="/transfer" element={<PrivateRoute><div>Transfer Page (Coming Soon)</div></PrivateRoute>} />
-        <Route path="/adjustment" element={<PrivateRoute><div>Adjustment Page (Coming Soon)</div></PrivateRoute>} />
-        <Route path="/history" element={<PrivateRoute><div>History Page (Coming Soon)</div></PrivateRoute>} />
-        <Route path="/settings" element={<PrivateRoute><div>Settings Page (Coming Soon)</div></PrivateRoute>} />
-        <Route path="/profile" element={<PrivateRoute><div>Profile Page (Coming Soon)</div></PrivateRoute>} />
+        <Route path="/dashboard" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+        
+        {/* Products */}
+        <Route path="/products" element={<PrivateRoute><Products /></PrivateRoute>} />
+        <Route path="/products/new" element={<PrivateRoute><ProductForm /></PrivateRoute>} />
+        <Route path="/products/edit/:id" element={<PrivateRoute><ProductForm /></PrivateRoute>} />
+        
+        {/* Operations */}
+        <Route path="/receipts" element={<PrivateRoute><Receipts /></PrivateRoute>} />
+        <Route path="/receipts/new" element={<PrivateRoute><DeliveryForm /></PrivateRoute>} />
+        <Route path="/receipts/:id" element={<PrivateRoute><DeliveryForm /></PrivateRoute>} />
+        
+        <Route path="/delivery" element={<PrivateRoute><Delivery /></PrivateRoute>} />
+        <Route path="/delivery/new" element={<PrivateRoute><DeliveryForm /></PrivateRoute>} />
+        <Route path="/delivery/:id" element={<PrivateRoute><DeliveryForm /></PrivateRoute>} />
+        
+        <Route path="/transfer" element={<PrivateRoute><Transfer /></PrivateRoute>} />
+        <Route path="/adjustment" element={<PrivateRoute><Adjustment /></PrivateRoute>} />
+        <Route path="/history" element={<PrivateRoute><MoveHistory /></PrivateRoute>} />
+        
+        {/* Settings & Profile */}
+        <Route path="/settings" element={<PrivateRoute><Settings /></PrivateRoute>} />
+        <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
 
         {/* Default Route */}
-        <Route path="/" element={<Navigate to="/login" />} />
-        <Route path="*" element={<Navigate to="/login" />} />
+        <Route path="/" element={<Navigate to="/dashboard" />} />
+        <Route path="*" element={<Navigate to="/dashboard" />} />
+        <Route path="/warehouses" element={
+    <PrivateRoute>
+      <Warehouses />
+    </PrivateRoute>
+  } 
+/>
       </Routes>
     </BrowserRouter>
   );

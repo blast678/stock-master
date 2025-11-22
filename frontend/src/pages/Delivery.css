@@ -1,0 +1,27 @@
+.delivery-page {
+  padding: var(--spacing-lg);
+}
+
+.delivery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.delivery-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  transition: var(--transition);
+}
+
+.delivery-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+
+.status-waiting {
+  background: rgba(255, 193, 7, 0.15);
+  color: #ffc107;
+}

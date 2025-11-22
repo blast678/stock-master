@@ -1,0 +1,44 @@
+.adjustment-page {
+  padding: var(--spacing-lg);
+}
+
+.adjustments-table-container {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  overflow-x: auto;
+}
+
+.adjustments-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.adjustments-table th {
+  background: var(--bg-primary);
+  padding: var(--spacing-md);
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--border);
+}
+
+.adjustments-table td {
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--border);
+}
+
+.adjustments-table tr:hover {
+  background: var(--bg-primary);
+}
+
+.ref-number {
+  font-family: var(--font-family-mono);
+  background: var(--secondary);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  font-weight: 600;
+}

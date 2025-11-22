@@ -1,0 +1,104 @@
+.history-page {
+  padding: var(--spacing-lg);
+}
+
+.filter-section {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+  background: var(--bg-secondary);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.filter-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.filter-group select,
+.filter-group input {
+  padding: var(--spacing-sm);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.history-table-container {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  overflow-x: auto;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.history-table th {
+  background: var(--bg-primary);
+  padding: var(--spacing-md);
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--border);
+}
+
+.history-table td {
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--border);
+}
+
+.history-table tr:hover {
+  background: var(--bg-primary);
+}
+
+.type-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.type-receipt {
+  background: rgba(var(--color-success-rgb), 0.15);
+  color: var(--success);
+}
+
+.type-delivery {
+  background: rgba(var(--color-primary-rgb), 0.15);
+  color: var(--primary);
+}
+
+.type-transfer {
+  background: rgba(var(--color-warning-rgb), 0.15);
+  color: var(--warning);
+}
+
+.type-adjustment {
+  background: rgba(var(--color-info-rgb), 0.15);
+  color: var(--info);
+}
+
+.qty-positive {
+  color: var(--success);
+  font-weight: 600;
+}
+
+.qty-negative {
+  color: var(--error);
+  font-weight: 600;
+}

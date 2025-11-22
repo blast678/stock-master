@@ -1,0 +1,119 @@
+.delivery-form-page {
+  padding: var(--spacing-lg);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.form-actions-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+  flex-wrap: wrap;
+  background: var(--bg-secondary);
+  padding: var(--spacing-md);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+}
+
+.status-flow {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--spacing-xs);
+}
+
+.current-status {
+  background: var(--secondary);
+  padding: 0.25rem 0.75rem;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+}
+
+.flow-indicator {
+  font-size: 0.85rem;
+  color: var(--text-light);
+}
+
+.delivery-form-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+}
+
+.delivery-form-card h2 {
+  margin: 0 0 var(--spacing-lg);
+  font-size: 1.75rem;
+  color: var(--primary);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.products-section {
+  margin-top: var(--spacing-lg);
+}
+
+.products-section label {
+  display: block;
+  margin-bottom: var(--spacing-sm);
+  font-weight: 600;
+}
+
+.products-table {
+  width: 100%;
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.products-table th {
+  background: var(--bg-secondary);
+  padding: var(--spacing-sm);
+  text-align: left;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border);
+}
+
+.products-table td {
+  padding: var(--spacing-sm);
+  border-bottom: 1px solid var(--border);
+}
+
+.products-table td input {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  padding: 0.35rem 0.5rem;
+  border-radius: var(--radius-sm);
+  color: var(--text-primary);
+}
+
+.btn-remove {
+  background: transparent;
+  border: none;
+  color: var(--error);
+  cursor: pointer;
+  padding: 0.25rem;
+  display: flex;
+  align-items: center;
+}
+
+.btn-add {
+  width: 100%;
+  justify-content: center;
+  margin-top: var(--spacing-sm);
+}
+
+.form-submit {
+  margin-top: var(--spacing-lg);
+  display: flex;
+  justify-content: flex-end;
+}
