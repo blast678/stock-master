@@ -1,24 +1,51 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FiSettings, FiPlus } from 'react-icons/fi';
+import { useNavigate, useLocation } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import './Settings.css';
 
+import { 
+  warehouses as mockWarehouses, 
+  locations as mockLocations, 
+  deleteWarehouse, 
+  deleteLocation 
+} from '../mock/mockData';
+
 const Settings = () => {
+  const navigate = useNavigate();
+  const routeState = useLocation().state;
+
   const [activeTab, setActiveTab] = useState('warehouses');
-  const [warehouses, setWarehouses] = useState([
-    { _id: '1', name: 'Main Warehouse', code: 'WH', location: 'City Center' },
-    { _id: '2', name: 'Branch Store', code: 'BS', location: 'North Zone' },
-  ]);
+  const [warehouses, setWarehouses] = useState([]);
+  const [locations, setLocations] = useState([]);
 
-  const [locations, setLocations] = useState([
-    { _id: '1', name: 'Rack A1', code: 'A1', warehouse: 'Main Warehouse' },
-    { _id: '2', name: 'Shelf B2', code: 'B2', warehouse: 'Branch Store' },
-  ]);
+  useEffect(() => {
+    setWarehouses([...mockWarehouses]);
+    setLocations([...mockLocations]);
 
-  const [categories, setCategories] = useState([
-    { _id: '1', name: 'Raw Material', description: 'Unprocessed materials' },
-    { _id: '2', name: 'Furniture', description: 'Office and home furniture' },
-  ]);
+    if (routeState?.openTab) {
+      setActiveTab(routeState.openTab);
+    }
+  }, [routeState]);
+
+  // Handlers
+  const handleDeleteWarehouse = (id) => {
+    if (window.confirm('Are you sure you want to delete this warehouse?')) {
+      deleteWarehouse(id);
+      setWarehouses([...mockWarehouses]);
+      setLocations([...mockLocations]);
+    }
+  };
+
+  const handleDeleteLocation = (id) => {
+    if (window.confirm('Are you sure you want to delete this location?')) {
+      deleteLocation(id);
+      setLocations([...mockLocations]);
+    }
+  };
+
+  const handleEditWarehouse = (id) => navigate(`/settings/edit-warehouse/${id}`);
+  const handleEditLocation = (id) => navigate(`/settings/edit-location/${id}`);
 
   return (
     <MainLayout>
@@ -31,52 +58,34 @@ const Settings = () => {
         </div>
 
         <div className="settings-tabs">
-          <button 
-            className={activeTab === 'warehouses' ? 'active' : ''} 
-            onClick={() => setActiveTab('warehouses')}
-          >
-            Warehouses
-          </button>
-          <button 
-            className={activeTab === 'locations' ? 'active' : ''} 
-            onClick={() => setActiveTab('locations')}
-          >
-            Locations
-          </button>
-          <button 
-            className={activeTab === 'categories' ? 'active' : ''} 
-            onClick={() => setActiveTab('categories')}
-          >
-            Categories
-          </button>
+          <button className={activeTab==='warehouses'?'active':''} onClick={()=>setActiveTab('warehouses')}>Warehouses</button>
+          <button className={activeTab==='locations'?'active':''} onClick={()=>setActiveTab('locations')}>Locations</button>
+          <button className={activeTab==='categories'?'active':''} onClick={()=>setActiveTab('categories')}>Categories</button>
         </div>
 
-        {activeTab === 'warehouses' && (
+        {/* Warehouses */}
+        {activeTab==='warehouses' && (
           <div className="settings-content">
             <div className="content-header">
               <h2>Warehouses</h2>
-              <button className="btn btn-primary">
-                <FiPlus /> Add Warehouse
-              </button>
+              <button className="btn btn-primary" onClick={()=>navigate('/settings/add-warehouse')}><FiPlus/> Add Warehouse</button>
             </div>
+
             <table className="settings-table">
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Code</th>
-                  <th>Location</th>
-                  <th>Actions</th>
+                  <th>Name</th><th>Code</th><th>Location</th><th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {warehouses.map(wh => (
-                  <tr key={wh._id}>
-                    <td>{wh.name}</td>
-                    <td><span className="code-badge">{wh.code}</span></td>
-                    <td>{wh.location}</td>
+                {warehouses.map(w => (
+                  <tr key={w._id}>
+                    <td>{w.name}</td>
+                    <td><span className="code-badge">{w.code}</span></td>
+                    <td>{w.location}</td>
                     <td>
-                      <button className="btn-icon btn-edit">Edit</button>
-                      <button className="btn-icon btn-delete">Delete</button>
+                      <button className="btn-icon btn-edit" onClick={()=>handleEditWarehouse(w._id)}>Edit</button>
+                      <button className="btn-icon btn-delete" onClick={()=>handleDeleteWarehouse(w._id)}>Delete</button>
                     </td>
                   </tr>
                 ))}
@@ -85,64 +94,29 @@ const Settings = () => {
           </div>
         )}
 
-        {activeTab === 'locations' && (
+        {/* Locations */}
+        {activeTab==='locations' && (
           <div className="settings-content">
             <div className="content-header">
               <h2>Locations / Storage Areas</h2>
-              <button className="btn btn-primary">
-                <FiPlus /> Add Location
-              </button>
+              <button className="btn btn-primary" onClick={()=>navigate('/settings/add-location')}><FiPlus/> Add Location</button>
             </div>
-            <table className="settings-table">
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Code</th>
-                  <th>Warehouse</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {locations.map(loc => (
-                  <tr key={loc._id}>
-                    <td>{loc.name}</td>
-                    <td><span className="code-badge">{loc.code}</span></td>
-                    <td>{loc.warehouse}</td>
-                    <td>
-                      <button className="btn-icon btn-edit">Edit</button>
-                      <button className="btn-icon btn-delete">Delete</button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
 
-        {activeTab === 'categories' && (
-          <div className="settings-content">
-            <div className="content-header">
-              <h2>Product Categories</h2>
-              <button className="btn btn-primary">
-                <FiPlus /> Add Category
-              </button>
-            </div>
             <table className="settings-table">
               <thead>
                 <tr>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Actions</th>
+                  <th>Name</th><th>Code</th><th>Warehouse</th><th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {categories.map(cat => (
-                  <tr key={cat._id}>
-                    <td>{cat.name}</td>
-                    <td>{cat.description}</td>
+                {locations.map(l => (
+                  <tr key={l._id}>
+                    <td>{l.name}</td>
+                    <td><span className="code-badge">{l.code}</span></td>
+                    <td>{l.warehouse}</td>
                     <td>
-                      <button className="btn-icon btn-edit">Edit</button>
-                      <button className="btn-icon btn-delete">Delete</button>
+                      <button className="btn-icon btn-edit" onClick={()=>handleEditLocation(l._id)}>Edit</button>
+                      <button className="btn-icon btn-delete" onClick={()=>handleDeleteLocation(l._id)}>Delete</button>
                     </td>
                   </tr>
                 ))}

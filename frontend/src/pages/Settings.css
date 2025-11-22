@@ -81,3 +81,79 @@
   font-size: 0.85rem;
   font-weight: 600;
 }
+
+/* Wrap the form nicely like your tables */
+.settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* creates spacing between each input + the submit button */
+  max-width: 500px;
+  margin-top: 20px;
+}
+
+/* Form group (label + input) spacing */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Inputs consistent with your theme */
+.settings-form input,
+.settings-form select {
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background: #fafafa;
+  font-size: 15px;
+}
+
+/* Ensure submit button does not stick to the last input */
+.settings-form button {
+  margin-top: 10px;
+  width: fit-content;
+}
+
+.btn-icon {
+  border-radius: 6px;
+  padding: 6px 14px;
+  min-width: 60px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  overflow: visible;
+  position: relative;
+  user-select: none;
+}
+
+/* Default delete button style */
+.btn-delete {
+  color: var(--danger); /* e.g. red text */
+  background-color: transparent;
+  border: 1px solid var(--danger);
+}
+
+.btn-delete:hover {
+  background-color: var(--danger); /* red bg */
+  color: #fff; /* white text */
+  box-shadow: 0 4px 8px rgba(255, 0, 0, 0.3);
+}
+
+/* Default edit button style */
+.btn-edit {
+  color: var(--primary);
+  background-color: transparent;
+  border: 1px solid var(--primary);
+}
+
+.btn-edit:hover {
+  background-color: var(--danger);
+  color: #fff;
+  box-shadow: 0 4px 8px rgba(33, 128, 141, 0.3);
+}
