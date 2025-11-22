@@ -154,15 +154,6 @@ const MoveHistory = () => {
                 )}
               </tbody>
             </table>
-            <div className="table-help-text">
-              Populate all moves done between the from - To location in inventory
-              <br />
-              <em style={{ fontSize: '0.95em', color: '#999' }}>
-                If single reference has multiple product display it in multiple rows.
-                <br />
-                In event should be display in green. Out moves should be display in red.
-              </em>
-            </div>
           </div>
         )}
 
