@@ -1,16 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const {
-  getDashboardKPIs,
+  getKPIs,
   getRecentActivities,
-  getOperationsSummary,
-  getStockStatistics
+  getOperations
 } = require('../controllers/dashboardController');
 const { protect } = require('../middleware/auth');
 
-router.get('/kpis', protect, getDashboardKPIs);
+router.get('/kpis', protect, getKPIs);
 router.get('/activities', protect, getRecentActivities);
-router.get('/operations', protect, getOperationsSummary);
-router.get('/stock-stats', protect, getStockStatistics);
+router.get('/operations', protect, getOperations);
 
 module.exports = router;

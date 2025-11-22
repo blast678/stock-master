@@ -2,26 +2,260 @@
   padding: var(--spacing-lg);
 }
 
-.delivery-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: var(--spacing-md);
+.delivery-header-row {
+  display: flex;
+  align-items: center;
+  gap: 1.3rem;
+  margin-bottom: var(--spacing-xl);
 }
 
-.delivery-card {
+.delivery-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 1.5rem 0 0.5rem;
+  letter-spacing: 0.01em;
+  flex: 1 1 0;
+}
+
+.delivery-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.search-bar-compact {
   background: var(--bg-secondary);
   border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.35em 0.8em;
+  display: flex;
+  align-items: center;
+  max-width: 240px;
+  min-width: 160px;
+  margin-right: 10px;
+}
+
+.search-bar-compact input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 1em;
+  margin-left: 0.5em;
+}
+
+.btn-icon {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.25em;
+  padding: 0.32em 0.52em 0.32em 0.42em;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background 0.14s;
+}
+.btn-icon.active,
+.btn-icon:hover {
+  background: var(--secondary);
+  color: var(--primary);
+}
+
+.delivery-table-container {
+  background: var(--bg-secondary);
   border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  overflow-x: auto;
+  margin-top: 10px;
+}
+
+.delivery-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.delivery-table th {
+  background: var(--bg-primary);
   padding: var(--spacing-md);
-  transition: var(--transition);
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 0.92rem;
+  text-transform: uppercase;
+  border-bottom: 2px solid var(--border);
 }
 
-.delivery-card:hover {
-  box-shadow: var(--shadow-lg);
-  transform: translateY(-2px);
+.delivery-table td {
+  padding: var(--spacing-md) 0.7em;
+  border-bottom: 1px solid var(--border);
+  font-size: 1em;
+}
+.delivery-table tr.delivery-row:hover {
+  background: var(--bg-primary);
 }
 
-.status-waiting {
-  background: rgba(255, 193, 7, 0.15);
-  color: #ffc107;
+.ref-badge {
+  background: var(--secondary);
+  padding: 0.19rem 0.9rem;
+  border-radius: var(--radius-md);
+  font-size: 0.92em;
+  font-family: var(--font-family-mono);
+  font-weight: 600;
+  letter-spacing: 0.03em;
 }
+
+.status-badge {
+  display: inline-block;
+  padding: 0.23em 0.78em;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.99em;
+}
+
+.status-badge.status-draft    { background: #ffe7c3; color: #d88100; }
+.status-badge.status-waiting  { background: #fff3cd; color: #b47d00; }
+.status-badge.status-ready    { background: #ccecec; color: #238989; }
+.status-badge.status-done     { background: #daffde; color: #0d9300; }
+.status-badge.status-cancelled { background: #eee; color: #b22222; }
+
+.table-help-text {
+  text-align: center;
+  color: var(--text-light);
+  font-size: 1.04em;
+  margin: 1.6em 0 0.7em 0;
+}
+.no-data {
+  text-align: center;
+  color: var(--text-light);
+  padding: 2.4em 0;
+  font-size: 1.1em;
+}
+
+@media (max-width: 600px) {
+  .delivery-table th,
+  .delivery-table td {
+    padding: 0.6em 0.5em;
+    font-size: 0.95em;
+  }
+  .delivery-title { font-size: 1.34rem; }
+}
+.kanban-board {
+  display: flex;
+  gap: 1.5rem;
+  margin: 1.7em 0 2em 0;
+  min-height: 260px;
+  overflow-x: auto;
+}
+.kanban-column {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  flex: 1 1 0;
+  min-width: 238px;
+  display: flex;
+  flex-direction: column;
+  max-width: 280px;
+}
+
+.kanban-col-header {
+  padding: 0.84em 1em;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.05em;
+  border-bottom: 2px solid var(--border);
+  letter-spacing: 0.01em;
+}
+
+.kanban-col-content {
+  padding: 0.9em 0.6em 1.2em 0.6em;
+  flex: 1;
+  min-height: 160px;
+}
+.kanban-empty {
+  text-align: center;
+  color: var(--text-light);
+  margin-top: 1em;
+  font-size: 1.03em;
+}
+.kanban-card {
+  cursor: pointer;
+  background: var(--bg-primary);
+  box-shadow: 0 2px 10px #0001;
+  border-radius: var(--radius-md);
+  margin-bottom: 1.1em;
+  padding: 0.8em 1em 0.62em 1em;
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  transition: box-shadow 0.13s, background 0.12s;
+}
+.kanban-card:hover {
+  box-shadow: 0 6px 14px #2222;
+  background: #f7f8fb;
+}
+.kanban-ref {
+  font-weight: 600;
+  font-family: var(--font-family-mono);
+  color: var(--primary);
+  margin-bottom: 0.2em;
+}
+.kanban-desc {
+  font-size: 1.05em;
+  margin-bottom: 0.31em;
+}
+.kanban-date {
+  font-size: 0.98em;
+  color: var(--text-secondary);
+}
+/* Search bar enhancements */
+.search-bar-compact {
+  display: flex;
+  align-items: center;
+  background: var(--bg-secondary);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 0.32em 0.82em 0.34em 0.67em;
+  gap: 0.5em;
+  min-width: 190px;
+  max-width: 320px;
+  transition: box-shadow 0.18s;
+  box-shadow: 0 1px 8px #0001;
+}
+
+.search-bar-compact input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-primary);
+  font-size: 1.05em;
+  width: 100%;
+  padding: 0.16em 0.2em;
+  margin-left: 0.33em;
+  font-family: inherit;
+}
+
+.search-bar-compact:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 2px 14px #b6e2ffa0;
+}
+
+.search-bar-compact svg {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+.status-badge {
+  background: #eaf3fa;
+  color: #257196;
+  border-radius: 15px;
+  padding: 0.41em 1.1em;
+  font-weight: 700;
+  font-size: 1em;
+  display: inline-block;
+  box-shadow: 0 2px 8px 0 #c2e2fc0d;
+  transition: background 0.12s;
+  text-align: center;
+}
+.status-badge.status-draft { background: #eaf3fa; color: #257196; }
+.status-badge.status-waiting { background: #fff7e1; color: #ad8300; }
+.status-badge.status-ready { background: #e0faf0; color: #27b29c; }
+.status-badge.status-done { background: #e1fae7; color: #238d41; }
+.status-badge.status-cancelled { background: #f6eaea; color: #b22222; }

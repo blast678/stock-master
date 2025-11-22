@@ -4,36 +4,25 @@
   margin: 0 auto;
 }
 
-.btn-back {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-  margin-bottom: var(--spacing-md);
-}
-
-.product-form {
+.product-form-card {
   background: var(--bg-secondary);
-  border-radius: var(--radius-lg);
   border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
   padding: var(--spacing-lg);
+  margin-top: var(--spacing-md);
 }
 
-.form-section {
-  margin-bottom: var(--spacing-xl);
-}
-
-.form-section h2 {
-  font-size: 1.25rem;
-  margin-bottom: var(--spacing-md);
-  color: var(--text-primary);
-  border-bottom: 2px solid var(--border);
-  padding-bottom: var(--spacing-sm);
+.product-form-card h2 {
+  margin: 0 0 var(--spacing-lg);
+  font-size: 1.75rem;
+  color: var(--primary);
 }
 
 .form-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
 }
 
 .form-group {
@@ -43,19 +32,19 @@
 }
 
 .form-group label {
-  font-weight: 500;
-  color: var(--text-primary);
+  font-weight: 600;
+  color: var(--text-secondary);
   font-size: 0.9rem;
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
-  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--bg-primary);
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
   font-size: 1rem;
-  background: var(--bg-primary);
   color: var(--text-primary);
   transition: var(--transition);
 }
@@ -63,9 +52,14 @@
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-  border-color: var(--primary);
   outline: none;
-  box-shadow: 0 0 0 3px var(--color-focus-ring);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(var(--color-primary-rgb), 0.1);
+}
+
+.form-group input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .form-group textarea {
@@ -80,4 +74,18 @@
   margin-top: var(--spacing-lg);
   padding-top: var(--spacing-lg);
   border-top: 1px solid var(--border);
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+  
+  .form-actions button {
+    width: 100%;
+  }
 }

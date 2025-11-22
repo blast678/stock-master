@@ -1,13 +1,17 @@
 import { useState, useEffect } from 'react';
-import { FiTruck, FiFilter } from 'react-icons/fi';
+import { FiPlus, FiList, FiGrid, FiSearch, FiTruck } from 'react-icons/fi';
 import { format } from 'date-fns';
 import MainLayout from '../layouts/MainLayout';
+import { ledgerService } from '../services/ledgerService';
 import './MoveHistory.css';
 
 const MoveHistory = () => {
   const [history, setHistory] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [view, setView] = useState('list');
+  const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState({
-    type: 'all',
+    operationType: 'all',
     startDate: '',
     endDate: ''
   });
@@ -17,17 +21,27 @@ const MoveHistory = () => {
   }, [filter]);
 
   const fetchHistory = async () => {
+    setLoading(true);
     try {
-      // Mock data
-      setHistory([
-        { _id: '1', type: 'receipt', refNo: 'WH/IN/0001', product: 'Steel Rods', quantity: 100, warehouse: 'Main Warehouse', date: new Date(), user: 'john_doe' },
-        { _id: '2', type: 'delivery', refNo: 'WH/OUT/0001', product: 'Wooden Chair', quantity: -25, warehouse: 'Main Warehouse', date: new Date(), user: 'jane_smith' },
-        { _id: '3', type: 'transfer', refNo: 'WH/TRF/0001', product: 'Office Desk', quantity: 5, warehouse: 'Branch Store', date: new Date(), user: 'admin' },
-        { _id: '4', type: 'adjustment', refNo: 'ADJ/001', product: 'Steel Rods', quantity: -2, warehouse: 'Main Warehouse', date: new Date(), user: 'john_doe' },
-      ]);
+      const params = {
+        search: searchTerm,
+        operationType: filter.operationType,
+        startDate: filter.startDate,
+        endDate: filter.endDate
+      };
+      const response = await ledgerService.getAll(params);
+
+      setHistory(response.data);
     } catch (error) {
       console.error('Failed to fetch history:', error);
+      alert('Failed to load move history');
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const handleSearch = () => {
+    fetchHistory();
   };
 
   const handleFilterChange = (e) => {
@@ -35,23 +49,52 @@ const MoveHistory = () => {
     setFilter({ ...filter, [name]: value });
   };
 
+  const filteredHistory = history.filter(item =>
+    item.reference?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.contact?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <MainLayout>
       <div className="history-page">
-        <div className="page-header">
-          <div className="header-left">
-            <FiTruck size={32} />
-            <h1>Move History</h1>
+        <div className="history-header-row">
+          <button className="btn btn-primary" style={{ fontWeight: 600, minWidth: 86, fontSize: '1.08em' }}>
+            <FiPlus style={{ marginRight: 6, marginBottom: -2 }} />
+            NEW
+          </button>
+          <h1 className="history-title">Move History</h1>
+          <div className="history-header-actions">
+            <div className="search-bar search-bar-compact">
+              <FiSearch size={18} />
+              <input
+                type="text"
+                placeholder="Search reference or contact..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+              />
+            </div>
+            <button
+              className={`btn-icon ${view === 'list' ? 'active' : ''}`}
+              onClick={() => setView('list')}
+              title="List view"
+            ><FiList /></button>
+            <button
+              className={`btn-icon ${view === 'kanban' ? 'active' : ''}`}
+              onClick={() => setView('kanban')}
+              title="Kanban view"
+            ><FiGrid /></button>
           </div>
         </div>
 
+        {/* Filters */}
         <div className="filter-section">
           <div className="filter-group">
             <label>Type</label>
-            <select name="type" value={filter.type} onChange={handleFilterChange}>
+            <select name="operationType" value={filter.operationType} onChange={handleFilterChange}>
               <option value="all">All Types</option>
-              <option value="receipt">Receipt</option>
-              <option value="delivery">Delivery</option>
+              <option value="receipt">Receipt (IN)</option>
+              <option value="delivery">Delivery (OUT)</option>
               <option value="transfer">Transfer</option>
               <option value="adjustment">Adjustment</option>
             </select>
@@ -66,42 +109,89 @@ const MoveHistory = () => {
           </div>
         </div>
 
-        <div className="history-table-container">
-          <table className="history-table">
-            <thead>
-              <tr>
-                <th>Date & Time</th>
-                <th>Type</th>
-                <th>Reference No.</th>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Warehouse</th>
-                <th>User</th>
-              </tr>
-            </thead>
-            <tbody>
-              {history.map(item => (
-                <tr key={item._id}>
-                  <td>{format(new Date(item.date), 'MMM dd, yyyy HH:mm')}</td>
-                  <td>
-                    <span className={`type-badge type-${item.type}`}>
-                      {item.type}
-                    </span>
-                  </td>
-                  <td><span className="ref-number">{item.refNo}</span></td>
-                  <td>{item.product}</td>
-                  <td>
-                    <span className={item.quantity < 0 ? 'qty-negative' : 'qty-positive'}>
-                      {item.quantity > 0 ? '+' : ''}{item.quantity}
-                    </span>
-                  </td>
-                  <td>{item.warehouse}</td>
-                  <td>{item.user}</td>
+        {/* List View */}
+        {view === 'list' && (
+          <div className="history-table-container">
+            <table className="history-table">
+              <thead>
+                <tr>
+                  <th>Reference</th>
+                  <th>Date</th>
+                  <th>Contact</th>
+                  <th>From</th>
+                  <th>To</th>
+                  <th>Quantity</th>
+                  <th>Status</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody>
+                {filteredHistory.length === 0 ? (
+                  <tr>
+                    <td colSpan="7" className="no-data">No move history found</td>
+                  </tr>
+                ) : (
+                  filteredHistory.map((item) => (
+                    <tr key={item._id} className={`history-row ${item.operationType === 'receipt' ? 'row-in' : 'row-out'}`}>
+                      <td>
+                        <span className="ref-badge">{item.reference}</span>
+                      </td>
+                      <td>{format(new Date(item.createdAt), 'yyyy-MM-dd')}</td>
+                      <td>{item.contact || '-'}</td>
+                      <td>{item.from}</td>
+                      <td>{item.to}</td>
+                      <td>
+                        <span className={item.operationType === 'receipt' ? 'qty-in' : 'qty-out'}>
+                          {item.productName} ({item.quantity})
+                        </span>
+                      </td>
+                      <td>
+                        <span className={`status-badge status-${item.status?.toLowerCase()}`}>
+                          {item.status}
+                        </span>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+            <div className="table-help-text">
+              Populate all moves done between the from - To location in inventory
+              <br />
+              <em style={{ fontSize: '0.95em', color: '#999' }}>
+                If single reference has multiple product display it in multiple rows.
+                <br />
+                In event should be display in green. Out moves should be display in red.
+              </em>
+            </div>
+          </div>
+        )}
+
+        {/* Kanban View */}
+        {view === 'kanban' && (
+          <div className="kanban-board">
+            {['receipt', 'delivery', 'transfer', 'adjustment'].map(type => (
+              <div key={type} className="kanban-column">
+                <div className={`kanban-col-header type-badge type-${type}`}>
+                  {type.toUpperCase()}
+                </div>
+                <div className="kanban-col-content">
+                  {filteredHistory.filter(h => h.operationType === type).length === 0 ? (
+                    <div className="kanban-empty">No moves</div>
+                  ) : (
+                    filteredHistory.filter(h => h.operationType === type).map(item => (
+                      <div className="kanban-card" key={item._id}>
+                        <div className="kanban-ref">{item.reference}</div>
+                        <div className="kanban-desc">{item.from} → {item.to}</div>
+                        <div className="kanban-product">{item.productName} ({item.quantity})</div>
+                        <div className="kanban-date">{format(new Date(item.createdAt), 'MMM dd, yyyy')}</div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </MainLayout>
   );

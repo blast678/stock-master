@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FiPlus, FiEdit2, FiTrash2, FiSearch, FiPackage } from 'react-icons/fi';
 import MainLayout from '../layouts/MainLayout';
+import { productService } from '../services/productService';
 import './Products.css';
 
 const Products = () => {
@@ -17,18 +18,11 @@ const Products = () => {
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      // TODO: Replace with actual API call
-      // const response = await productService.getAllProducts();
-      // setProducts(response.data);
-      
-      // Mock data for now
-      setProducts([
-        { _id: '1', name: 'Steel Rods', sku: 'STEEL001', category: 'Raw Material', currentStock: 150, reorderLevel: 50, unitPrice: 500 },
-        { _id: '2', name: 'Wooden Chair', sku: 'CHAIR001', category: 'Furniture', currentStock: 25, reorderLevel: 10, unitPrice: 2500 },
-        { _id: '3', name: 'Office Desk', sku: 'DESK001', category: 'Furniture', currentStock: 5, reorderLevel: 10, unitPrice: 8000 },
-      ]);
+      const response = await productService.getAll();
+      setProducts(response.data);
     } catch (error) {
       console.error('Failed to fetch products:', error);
+      alert('Failed to load products');
     } finally {
       setLoading(false);
     }
@@ -37,10 +31,12 @@ const Products = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this product?')) {
       try {
-        // await productService.deleteProduct(id);
+        await productService.delete(id);
         setProducts(products.filter(p => p._id !== id));
+        alert('Product deleted successfully');
       } catch (error) {
         console.error('Failed to delete product:', error);
+        alert(error.response?.data?.message || 'Failed to delete product');
       }
     }
   };
@@ -106,7 +102,7 @@ const Products = () => {
                         </span>
                       </td>
                       <td>{product.reorderLevel}</td>
-                      <td>₹{product.unitPrice}</td>
+                      <td>₹{product.unitPrice.toLocaleString()}</td>
                       <td>
                         <div className="action-buttons">
                           <button
