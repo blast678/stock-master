@@ -94,6 +94,7 @@ const Signup = () => {
       await signup(formData);
       navigate('/dashboard');
     } catch (err) {
+      console.log(err);
       setError(err.response?.data?.message || 'Failed to create account');
     } finally {
       setLoading(false);
