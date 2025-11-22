@@ -42,6 +42,16 @@ const AppRoutes = () => {
           }
         />
 
+        {/* Placeholder routes - will be implemented next */}
+        <Route path="/products" element={<PrivateRoute><div>Products Page (Coming Soon)</div></PrivateRoute>} />
+        <Route path="/receipts" element={<PrivateRoute><div>Receipts Page (Coming Soon)</div></PrivateRoute>} />
+        <Route path="/delivery" element={<PrivateRoute><div>Delivery Page (Coming Soon)</div></PrivateRoute>} />
+        <Route path="/transfer" element={<PrivateRoute><div>Transfer Page (Coming Soon)</div></PrivateRoute>} />
+        <Route path="/adjustment" element={<PrivateRoute><div>Adjustment Page (Coming Soon)</div></PrivateRoute>} />
+        <Route path="/history" element={<PrivateRoute><div>History Page (Coming Soon)</div></PrivateRoute>} />
+        <Route path="/settings" element={<PrivateRoute><div>Settings Page (Coming Soon)</div></PrivateRoute>} />
+        <Route path="/profile" element={<PrivateRoute><div>Profile Page (Coming Soon)</div></PrivateRoute>} />
+
         {/* Default Route */}
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="*" element={<Navigate to="/login" />} />
