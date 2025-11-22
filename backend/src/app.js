@@ -32,14 +32,9 @@ const deliveryRoutes = require('./routes/deliveryRoutes');
 const transferRoutes = require('./routes/transferRoutes');
 const adjustmentRoutes = require('./routes/adjustmentRoutes');
 const warehouseRoutes = require('./routes/warehouseRoutes');
-const ledgerRoutes = require('./routes/ledgerRoutes'); // UPDATED PATH
+const ledgerRoutes = require('./routes/ledgerRoutes');
 
 // Register routes
-app.use('/api/auth', authRoutes);
-app.use('/api/dashboard', dashboardRoutes);
-app.use('/api/products', productRoutes);
-app.use('/api/receipts', receiptRoutes);
-app.use('/api/delivery', deliveryRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/dashboard', dashboardRoutes);
 app.use('/api/products', productRoutes);
@@ -48,7 +43,7 @@ app.use('/api/delivery', deliveryRoutes);
 app.use('/api/transfers', transferRoutes);
 app.use('/api/adjustments', adjustmentRoutes);
 app.use('/api/warehouses', warehouseRoutes);
-app.use('/api/ledger', ledgerRoutes); // UPDATED PATH
+app.use('/api/ledger', ledgerRoutes);
 
 // Health check
 app.get('/health', (req, res) => {

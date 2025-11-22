@@ -89,3 +89,22 @@
     width: 100%;
   }
 }
+.btn-back {
+  margin-bottom: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: transparent;
+  border: 2px solid var(--border);
+  color: var(--text-primary);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+}
+
+.btn-back:hover {
+  background: var(--secondary);
+  border-color: var(--primary);
+}

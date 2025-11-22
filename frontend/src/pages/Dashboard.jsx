@@ -29,7 +29,7 @@ const Dashboard = () => {
 
   const [kpis, setKpis] = useState(null);
   const [activities, setActivities] = useState([]);
-  const [operations, setOperations] = useState([]);
+  const [operations, setOperations] = useState({ receipts: {}, deliveries: {} });
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
@@ -46,11 +46,43 @@ const Dashboard = () => {
         dashboardService.getOperations()
       ]);
 
-      setKpis(kpisData.data);
-      setActivities(activitiesData.data);
-      setOperations(operationsData.data);
+      setKpis(kpisData.data || {
+        totalProducts: 0,
+        totalReceipts: 0,
+        totalDeliveries: 0,
+        totalStockValue: 0,
+        lowStockItems: 0,
+        outOfStockItems: 0,
+        pendingReceipts: 0,
+        pendingDeliveries: 0,
+        internalTransfers: 0
+      });
+
+      setActivities(activitiesData.data || []);
+      
+      setOperations(operationsData.data || {
+        receipts: { draft: 0, ready: 0, done: 0 },
+        deliveries: { draft: 0, waiting: 0, ready: 0, done: 0 }
+      });
     } catch (error) {
       console.error('Failed to fetch dashboard data:', error);
+      // Set default values on error
+      setKpis({
+        totalProducts: 0,
+        totalReceipts: 0,
+        totalDeliveries: 0,
+        totalStockValue: 0,
+        lowStockItems: 0,
+        outOfStockItems: 0,
+        pendingReceipts: 0,
+        pendingDeliveries: 0,
+        internalTransfers: 0
+      });
+      setActivities([]);
+      setOperations({
+        receipts: { draft: 0, ready: 0, done: 0 },
+        deliveries: { draft: 0, waiting: 0, ready: 0, done: 0 }
+      });
     } finally {
       setLoading(false);
     }
@@ -59,7 +91,10 @@ const Dashboard = () => {
   const handleFilterChange = async (filters) => {
     try {
       const operationsData = await dashboardService.getOperations(filters);
-      setOperations(operationsData.data);
+      setOperations(operationsData.data || {
+        receipts: { draft: 0, ready: 0, done: 0 },
+        deliveries: { draft: 0, waiting: 0, ready: 0, done: 0 }
+      });
     } catch (error) {
       console.error('Failed to filter operations:', error);
     }
@@ -224,16 +259,19 @@ const Dashboard = () => {
               <div className="card-header">
                 <h3>Receipt</h3>
                 <div className="card-badge">
-                  <span className="badge late">{operations.filter(o => o.type === 'receipt' && o.status === 'late').length} Late</span>
+                  <span className="badge late">
+                    {operations?.receipts?.draft || 0} Draft
+                  </span>
                 </div>
               </div>
               <div className="card-body">
-                <button className="btn-card">
-                  {operations.filter(o => o.type === 'receipt' && o.status === 'waiting').length} to receive
+                <button className="btn-card" onClick={() => navigate('/receipts')}>
+                  {(operations?.receipts?.ready || 0)} to receive
                 </button>
                 <div className="card-stats">
-                  <p>{operations.filter(o => o.type === 'receipt' && o.status === 'late').length} Late</p>
-                  <p>{operations.filter(o => o.type === 'receipt').length} operations</p>
+                  <p>Draft: {operations?.receipts?.draft || 0}</p>
+                  <p>Ready: {operations?.receipts?.ready || 0}</p>
+                  <p>Done: {operations?.receipts?.done || 0}</p>
                 </div>
               </div>
             </div>
@@ -242,18 +280,20 @@ const Dashboard = () => {
               <div className="card-header">
                 <h3>Delivery</h3>
                 <div className="card-badge">
-                  <span className="badge late">{operations.filter(o => o.type === 'delivery' && o.status === 'late').length} Late</span>
-                  <span className="badge waiting">{operations.filter(o => o.type === 'delivery' && o.status === 'waiting').length} waiting</span>
+                  <span className="badge waiting">
+                    {operations?.deliveries?.waiting || 0} Waiting
+                  </span>
                 </div>
               </div>
               <div className="card-body">
-                <button className="btn-card">
-                  {operations.filter(o => o.type === 'delivery' && (o.status === 'ready' || o.status === 'waiting')).length} to Deliver
+                <button className="btn-card" onClick={() => navigate('/delivery')}>
+                  {(operations?.deliveries?.ready || 0) + (operations?.deliveries?.waiting || 0)} to Deliver
                 </button>
                 <div className="card-stats">
-                  <p>{operations.filter(o => o.type === 'delivery' && o.status === 'late').length} Late</p>
-                  <p>{operations.filter(o => o.type === 'delivery' && o.status === 'waiting').length} waiting</p>
-                  <p>{operations.filter(o => o.type === 'delivery').length} operations</p>
+                  <p>Draft: {operations?.deliveries?.draft || 0}</p>
+                  <p>Waiting: {operations?.deliveries?.waiting || 0}</p>
+                  <p>Ready: {operations?.deliveries?.ready || 0}</p>
+                  <p>Done: {operations?.deliveries?.done || 0}</p>
                 </div>
               </div>
             </div>
