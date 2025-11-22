@@ -1,5 +1,5 @@
 Project Structure
-
+```
 stock-master/
 ├── backend/                          # Node.js + Express + MongoDB
 │   ├── src/
@@ -176,3 +176,4 @@ stock-master/
 │
 ├── .gitignore
 └── README.md
+```
